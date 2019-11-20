@@ -1,6 +1,6 @@
 
 resource "google_compute_network" "tf_network" {
-  name                    = "${var.network_name}"
+  name                    = var.network_name
   description             = "CUSTOM VPC NETWORK"
   routing_mode            = "REGIONAL"
   auto_create_subnetworks = false
@@ -9,7 +9,7 @@ resource "google_compute_network" "tf_network" {
 resource "google_compute_subnetwork" "region" {
   count                    = 3
   name                     = "${var.region}-${count.index + 1}"
-  ip_cidr_range            = "${cidrsubnet(var.cidr_block, 8, count.index + 1)}"
+  ip_cidr_range            = cidrsubnet(var.cidr_block, 8, count.index + 1)
   region                   = "${var.region}-west${count.index + 1}"
   network                  = google_compute_network.tf_network.self_link
   private_ip_google_access = true
