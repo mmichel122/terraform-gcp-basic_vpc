@@ -11,13 +11,13 @@ resource "google_compute_subnetwork" "region" {
   name                     = "${var.region}-${count.index + 1}"
   ip_cidr_range            = "${cidrsubnet(var.cidr_block, 8, count.index + 1)}"
   region                   = "${var.region}-west${count.index + 1}"
-  network                  = "${google_compute_network.tf_network.self_link}"
+  network                  = google_compute_network.tf_network.self_link
   private_ip_google_access = true
 }
 
 resource "google_compute_firewall" "tf_network" {
   name    = "default-firewall-rule"
-  network = "${google_compute_network.tf_network.name}"
+  network = google_compute_network.tf_network.name
 
   allow {
     protocol = "icmp"
