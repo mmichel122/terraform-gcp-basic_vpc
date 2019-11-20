@@ -28,5 +28,5 @@ resource "google_compute_firewall" "tf_network" {
     ports    = ["22"]
   }
 
-  source_ranges = var.ssh_source_ips
+  source_ranges = [var.ssh_source_ips]
 }
